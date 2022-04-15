@@ -54,17 +54,41 @@ void HelperPrintInteger(void);
 
 void InstructionsClass::Encode(unsigned char c)
 {	
-	(void)c;
+	if(this->mCurrent < MAX_INSTRUCTIONS)
+	{ this->mCode[mCurrent++] = c; }
+	else
+	{
+		cerr << "Error. Used up all " << MAX_INSTRUCTIONS << " instructions." << endl;
+		exit(1);
+	}
 }
 
 void InstructionsClass::Encode(int x)
 {
-	(void)x;
+	if(this->mCurrent < MAX_INSTRUCTIONS)
+	{
+		*((int*) (&( this->mCode[this->mCurrent]))) = x;
+		this->mCurrent += 4;
+	}
+	else
+	{
+		cerr << "Error. Used up all " << MAX_INSTRUCTIONS << " instructions." << endl;
+		exit(1);
+	}
 }
 
 void InstructionsClass::Encode(long long x)
 {
-	(void)x;
+	if(this->mCurrent < MAX_INSTRUCTIONS)
+	{
+		*((long long*) (&( this->mCode[this->mCurrent]))) = x;
+		this->mCurrent += 4;
+	}
+	else
+	{
+		cerr << "Error. Used up all " << MAX_INSTRUCTIONS << " instructions." << endl;
+		exit(1);
+	}
 }
 
 void InstructionsClass::Encode(void * p)
@@ -132,7 +156,8 @@ void InstructionsClass::PrintAllMachineCodes()
 
 void InstructionsClass::PushValue(int value)
 {
-	(void)value;
+	Encode(IMMEDIATE_TO_EAX);
+	Encode(value);
 }
 
 void InstructionsClass::Call(void * function_address)

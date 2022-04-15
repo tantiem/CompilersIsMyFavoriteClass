@@ -11,3 +11,9 @@ instructions_starter.o: instructions_starter.cpp
 
 main: InstructionsTester.o instructions_starter.o instructions.h
 	$(CXX) -o main $(CXXFLAGS) $^
+
+mainbad:
+	g++ -z execstack *.cpp
+clean:
+	rm *.o
+	rm ./main

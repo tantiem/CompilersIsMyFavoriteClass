@@ -1,7 +1,11 @@
 #include <iostream>
+#include "instructions.h"
 
 int main()
 {
+	InstructionsClass instructions = InstructionsClass();
+	instructions.Finish();
+	instructions.Execute();
 	unsigned char mCode[] = {0x55, 0x8B, 0xEC, 0x5D, 0xC3};
 	std::cout<<"Finna execute machine code..."<<std::endl;
 	void * ptr = mCode;
