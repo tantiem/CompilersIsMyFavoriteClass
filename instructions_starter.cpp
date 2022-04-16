@@ -195,7 +195,7 @@ int * InstructionsClass::GetMem(int index)
 	}
 	return  &(mData[index]);
 }
-
+//index : index into mData specifying which integer should be pushed onto the system stack.
 void InstructionsClass::PushVariable(unsigned int index)
 {
 	int * variable_address = GetMem(index);
@@ -208,7 +208,12 @@ void InstructionsClass::PushVariable(unsigned int index)
 
 void InstructionsClass::PopAndStore(unsigned int index)
 {
-	(void)index;
+	int* ram_address = GetMem(index);
+
+	Encode(POP_EAX);
+	Encode(EAX_TO_MEM);
+	Encode(ram_address);
+	
 }
 
 
@@ -236,10 +241,20 @@ void InstructionsClass::PopPopAddPush()
 
 void InstructionsClass::PopPopSubPush()
 {
+	Encode(POP_EBX);
+	Encode(POP_EAX);
+	Encode(SUB_EAX_EBX1);
+	Encode(SUB_EAX_EBX2);
+	Encode(PUSH_EAX);
 }
 
 void InstructionsClass::PopPopMulPush()
 {
+	Encode(POP_EBX);
+	Encode(POP_EAX);
+	Encode(MUL_EAX_EBX1);
+	Encode(MUL_EAX_EBX2);
+	Encode(PUSH_EAX);
 }
 
 void InstructionsClass::PopPopDivPush()
@@ -279,18 +294,22 @@ void InstructionsClass::PopPopLessEqualPush()
 
 void InstructionsClass::PopPopGreaterPush()
 {
+	PopPopComparePush(JG);
 }
 
 void InstructionsClass::PopPopGreaterEqualPush()
 {
+	PopPopComparePush(JGE);
 }
 
 void InstructionsClass::PopPopEqualPush()
 {
+	PopPopComparePush(JE);
 }
 
 void InstructionsClass::PopPopNotEqualPush()
 {
+	PopPopComparePush(JNE);
 }
 
 void InstructionsClass::PopPopAndPush()
