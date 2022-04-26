@@ -1,0 +1,2 @@
+g++ -o instructions instructions.cpp instructions_tester.cpp
+
