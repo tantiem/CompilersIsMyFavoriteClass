@@ -1,0 +1,17 @@
+void main()
+{
+	/*
+	double slash comments dont work, but this does. idk why
+	*/
+
+	int i;
+	i = 0;
+	while ( i < 10 )
+	{
+		if ( i > 5 )
+		{
+			cout << i;
+		}
+		i = i + 1;
+	}
+}
