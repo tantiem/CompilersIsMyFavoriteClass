@@ -267,13 +267,14 @@ int PlusEqualsStatementNode::Interpret()
 }
 void PlusEqualsStatementNode::Code(InstructionsClass &machineCode)
 {
+
 	MSG("CODING: code eval'n an set'n values bruv.");
-	this->expressionNode->CodeEvaluate(machineCode);
 	int index = this->identifierNode->GetIndex();
 	machineCode.PushVariable(index);
-	machineCode.PushValue(this->expressionNode->Evaluate());
+	this->expressionNode->CodeEvaluate(machineCode);
 	machineCode.PopPopAddPush();
 	machineCode.PopAndStore(index);
+
 }
 
 
@@ -298,10 +299,9 @@ void MinusEqualsStatementNode::Code(InstructionsClass &machineCode)
 {
 
 	MSG("CODING: code eval'n an set'n values bruv.");
-	this->expressionNode->CodeEvaluate(machineCode);
 	int index = this->identifierNode->GetIndex();
 	machineCode.PushVariable(index);
-	machineCode.PushValue(this->expressionNode->Evaluate());
+	this->expressionNode->CodeEvaluate(machineCode);
 	machineCode.PopPopSubPush();
 	machineCode.PopAndStore(index);
 

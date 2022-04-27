@@ -10,16 +10,23 @@ void main()
 	{
 		if ( i > 5 )
 		{
-			cout << i;
+			cout << i << endl;
 		}
 		i = i + 1;
 	}
 	
-	cout << 1 << endl << 1;
+	cout << 1 << endl << 1 << endl;
 	/*
 	i += 100;
-	cout << i << endl;
-	i-=15;
-	cout<<i<<endl;
+	cout << i << endl; 
 	*/
+	i-=15; 
+	cout<<i<<endl;
+
+	int a;
+	a = 0;
+	a -= i;
+	cout<<a<<endl<<endl<<endl;
+	a += a;
+	cout<<a<<endl;
 }
