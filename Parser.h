@@ -59,7 +59,7 @@ class ParserClass
 		// <StatementGroup> -> <CoutStatement> <StatementGroup>
 		// <StatementGroup> -> <Block> <StatementGroup>
 		DeclarationStatementNode* DeclarationStatement(); // -> INT <Identifier> SEMICOLON
-		AssignmentStatementNode* AssignmentStatement(); // -> <Identifier> ASSIGNMENT <Expression> SEMICOLON
+		StatementNode* AssignmentStatement(); // -> <Identifier> ASSIGNMENT <Expression> SEMICOLON
 		CoutStatementNode* CoutStatement(); // -> COUT INSERTION <Expression> SEMICOLON
 		
 	private:

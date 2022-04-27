@@ -3,7 +3,7 @@
 #include "Parser.h"
 #include "instructions.h"
 
-void Parse(std::string filename)
+void Interpret(std::string filename)
 {
 	std::cout << "Building scannerclass" << std::endl;
 	ScannerClass* scanner = new ScannerClass(filename);
@@ -57,12 +57,12 @@ int main()
 	std::cout << std::endl;
 
 	std::string choice;
-	std::cout << "Code and execute, or parse? (code || parse)";
+	std::cout << "Code and execute, or parse? (code || interpret): ";
 	std::cin >> choice;
 	std::cout << std::endl;
 
 	if(choice == "code") { CodeAndExecute(filename); }
-	else if(choice == "parse") { Parse(filename); }
+	else if(choice == "interpret") { Interpret(filename); }
 	else { std::cout << "Fine be that way, later loser! :P" << std::endl; }
 //	SymbolTableClass* sc = new SymbolTableClass();
 	//do

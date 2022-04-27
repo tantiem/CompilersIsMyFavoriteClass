@@ -40,6 +40,10 @@ void TokenClass::CheckReserved()
 	{
 		this->mType = ELSE_TOKEN;
 	}
+	else if(this->mLexeme == "endl")
+	{
+		this->mType = ENDL_TOKEN;
+	}
 }
 //static const std::string& TokenClass::GetTokenTypeName(TokenType type) { return gTokenTypeNames[type]; }
 

@@ -50,6 +50,9 @@ StateMachineClass::StateMachineClass() : curState(START_ST)
 	this->legalMoves[BIT_OR_ST][BAR_CH] = OR_ST;
 	this->legalMoves[START_ST][AMP_CH] = BIT_AND_ST;
 	this->legalMoves[BIT_AND_ST][AMP_CH] = AND_ST;
+	//plus eq and sub eq
+	this->legalMoves[PL_ST][EQ_CH] = PLEQ_ST;
+	this->legalMoves[SUB_ST][EQ_CH] = SUBEQ_ST;
 
 	for(int i = 0; i < LAST_CH; i++)
 	{
@@ -94,6 +97,8 @@ StateMachineClass::StateMachineClass() : curState(START_ST)
 	this->correspondingTokenTypes[INS_ST] = INSERTION_TOKEN;
 	this->correspondingTokenTypes[OR_ST] = OR_TOKEN;
 	this->correspondingTokenTypes[AND_ST] = AND_TOKEN;
+	this->correspondingTokenTypes[PLEQ_ST] = PLUSEQUAL_TOKEN;
+	this->correspondingTokenTypes[SUBEQ_ST] = MINUSEQUAL_TOKEN;
 	this->correspondingTokenTypes[END_ST] = ENDFILE_TOKEN;
 }
 MachineState StateMachineClass::UpdateState(char currentChar, TokenType& correspondingTokenType)

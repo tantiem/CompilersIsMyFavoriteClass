@@ -14,4 +14,12 @@ void main()
 		}
 		i = i + 1;
 	}
+	
+	cout << 1 << endl << 1;
+	/*
+	i += 100;
+	cout << i << endl;
+	i-=15;
+	cout<<i<<endl;
+	*/
 }

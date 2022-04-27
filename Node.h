@@ -202,10 +202,32 @@ class Node
 				IdentifierNode* identifierNode;
 				ExpressionNode* expressionNode;
 		};
+		class PlusEqualsStatementNode: public StatementNode
+		{
+			public:
+				PlusEqualsStatementNode(IdentifierNode* identifierNode, ExpressionNode* expressionNode);
+				~PlusEqualsStatementNode();
+				int Interpret() override;
+				void Code(InstructionsClass &machineCode) override;
+			private:
+				IdentifierNode* identifierNode;
+				ExpressionNode* expressionNode;
+		};
+		class MinusEqualsStatementNode: public StatementNode
+		{
+			public:
+				MinusEqualsStatementNode(IdentifierNode* identifierNode, ExpressionNode* expressionNode);
+				~MinusEqualsStatementNode();
+				int Interpret() override;
+				void Code(InstructionsClass &machineCode) override;
+			private:
+				IdentifierNode* identifierNode;
+				ExpressionNode* expressionNode;
+		};
 		class CoutStatementNode: public StatementNode
 		{
 			public:
-				CoutStatementNode(ExpressionNode* expressionNode);
+				CoutStatementNode(std::vector<ExpressionNode*> expressionNode);
 				~CoutStatementNode();
 				int Interpret() override;
 				void Code(InstructionsClass &machineCode) override;

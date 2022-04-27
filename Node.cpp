@@ -246,25 +246,114 @@ void AssignmentStatementNode::Code(InstructionsClass &machineCode)
 	machineCode.PopAndStore(index);
 }
 
-CoutStatementNode::CoutStatementNode(ExpressionNode* expressionNode) : expressionNode(expressionNode) {}
+/////////////pe me////////////////////////
+
+PlusEqualsStatementNode::PlusEqualsStatementNode(IdentifierNode* identifierNode, ExpressionNode* expressionNode) : identifierNode(identifierNode), expressionNode(expressionNode) {}
+PlusEqualsStatementNode::~PlusEqualsStatementNode()
+{
+	delete this->identifierNode;
+	MSG("DELETING identifierNode of PlusEqualsStatementNode");
+	delete this->expressionNode;	
+	MSG("DELETING expressionNode of PlusEqualsStatementNode");
+	MSG("DELETING PlusEqualsStatementNode");
+}
+int PlusEqualsStatementNode::Interpret()
+{
+	MSG("INTERPRET: evaluating and setting value from plus eq satement node.");
+	int value = this->expressionNode->Evaluate();
+	int var = this->identifierNode->Evaluate();
+	this->identifierNode->SetValue(var + value);
+	return 1;
+}
+void PlusEqualsStatementNode::Code(InstructionsClass &machineCode)
+{
+	MSG("CODING: code eval'n an set'n values bruv.");
+	this->expressionNode->CodeEvaluate(machineCode);
+	int index = this->identifierNode->GetIndex();
+	machineCode.PushVariable(index);
+	machineCode.PushValue(this->expressionNode->Evaluate());
+	machineCode.PopPopAddPush();
+	machineCode.PopAndStore(index);
+}
+
+
+MinusEqualsStatementNode::MinusEqualsStatementNode(IdentifierNode* identifierNode, ExpressionNode* expressionNode) : identifierNode(identifierNode), expressionNode(expressionNode) {}
+MinusEqualsStatementNode::~MinusEqualsStatementNode()
+{
+	delete this->identifierNode;
+	MSG("DELETING identifierNode of MinusEqualsStatementNode");
+	delete this->expressionNode;	
+	MSG("DELETING expressionNode of MinusEqualsStatementNode");
+	MSG("DELETING MinusEqualsStatementNode");
+}
+int MinusEqualsStatementNode::Interpret()
+{
+	MSG("INTERPRET: evaluating and setting value from plus eq satement node.");
+	int value = this->expressionNode->Evaluate();
+	int var = this->identifierNode->Evaluate();
+	this->identifierNode->SetValue(var-value);
+	return 1;
+}
+void MinusEqualsStatementNode::Code(InstructionsClass &machineCode)
+{
+
+	MSG("CODING: code eval'n an set'n values bruv.");
+	this->expressionNode->CodeEvaluate(machineCode);
+	int index = this->identifierNode->GetIndex();
+	machineCode.PushVariable(index);
+	machineCode.PushValue(this->expressionNode->Evaluate());
+	machineCode.PopPopSubPush();
+	machineCode.PopAndStore(index);
+
+}
+
+/////////////pe me/////////////////////////
+
+CoutStatementNode::CoutStatementNode(std::vector<ExpressionNode*> expressionNode) : expressionNode(expressionNode) {}
 CoutStatementNode::~CoutStatementNode()
 {
-	delete this->expressionNode;
-	MSG("DELETING expressionNode of CoutStatementNode");
+	MSG("DELETING expressionNodes of CoutStatementNode");
+	int size = this->expressionNode.size();
+	for(int i = 0; i < size; i++)
+	{
+		delete this->expressionNode[i];
+	}
 	MSG("DELETING CoutStatementNode");
 }
 int CoutStatementNode::Interpret()
 {
 	MSG("INTERPRET: couting value contained");
-	int value = this->expressionNode->Evaluate();
-	std::cout<<value;
+	int size = this->expressionNode.size();
+	for(int i = 0; i < size; i++)
+	{
+		if(this->expressionNode[i] == NULL)
+		{
+			std::cout<<std::endl;
+		}
+		else
+		{
+			int value = this->expressionNode[i]->Evaluate();
+			std::cout<<value;
+		}
+	}
 	return 1;
 }
 void CoutStatementNode::Code(InstructionsClass &machineCode)
 {
 	MSG("CODING: couting the bloody RURRURUR");
-	this->expressionNode->CodeEvaluate(machineCode);
-	machineCode.PopAndWrite();
+	int size = this->expressionNode.size();
+	for(int i = 0; i < size; i++)
+	{
+		if(this->expressionNode[i] == NULL)
+		{
+			machineCode.WriteEndl();
+		}
+		else
+		{
+			this->expressionNode[i]->CodeEvaluate(machineCode);
+			machineCode.PopAndWrite();	
+		}
+	}
 }
 
 //NODE ONLY INHERITERS

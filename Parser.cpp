@@ -384,24 +384,65 @@ DeclarationStatementNode* ParserClass:: DeclarationStatement() // -> INT <Identi
 	Match(SEMICOLON_TOKEN);
 	return dsn;
 }
-AssignmentStatementNode* ParserClass:: AssignmentStatement() // -> <Identifier> ASSIGNMENT <Expression> SEMICOLON
+StatementNode* ParserClass:: AssignmentStatement() // -> <Identifier> ASSIGNMENT <Expression> SEMICOLON
 {
 	IdentifierNode* id = Identifier();
-	Match(ASSIGNMENT_TOKEN);
-	ExpressionNode* en = Expression();
-	Match(SEMICOLON_TOKEN);
-	AssignmentStatementNode* asn = new AssignmentStatementNode(id,en);
-	return asn;
+	TokenClass peekedToken = this->scannerClass->PeekNextToken();
+	switch(peekedToken.GetTokenType())
+	{
+		case ASSIGNMENT_TOKEN:
+		{
+			Match(ASSIGNMENT_TOKEN);	
+			ExpressionNode* en = Expression();
+			Match(SEMICOLON_TOKEN);
+			AssignmentStatementNode* asn = new AssignmentStatementNode(id,en);
+			return asn;
+		}
+		case PLUSEQUAL_TOKEN:
+		{
+			Match(PLUSEQUAL_TOKEN);
+			
+			ExpressionNode* en = Expression();
+			Match(SEMICOLON_TOKEN);
+			PlusEqualsStatementNode* peq = new PlusEqualsStatementNode(id,en);
+			return peq;
+		}
+		case MINUSEQUAL_TOKEN:
+		{
+			Match(MINUSEQUAL_TOKEN);
+			
+			ExpressionNode* en = Expression();
+			Match(SEMICOLON_TOKEN);
+			MinusEqualsStatementNode* meq = new MinusEqualsStatementNode(id,en);
+			return meq;
+		}
+		default:
+			std::cerr << "Honestly not sure how you managed this one. You didnt match +=, -=, or = at this point and have therefore royally effed urself.";
+			break;
+	}
+	return NULL;
 }
 CoutStatementNode* ParserClass:: CoutStatement() // -> COUT INSERTION <Expression> SEMICOLON
 {
 	std::vector<ExpressionNode*> expressions;
-	Match(COUT_TOKEN);
-	Match(INSERTION_TOKEN);
 	TokenClass peekedToken = this->scannerClass->PeekNextToken();
-
-	ExpressionNode* en = Expression();
-	expressions.push_back(en);
+	Match(COUT_TOKEN);
+	do
+	{
+		Match(INSERTION_TOKEN);
+		peekedToken = this->scannerClass->PeekNextToken();
+		if(peekedToken.GetTokenType() == ENDL_TOKEN)
+		{
+			Match(ENDL_TOKEN);
+			expressions.push_back(NULL);
+		}
+		else
+		{
+			ExpressionNode* en = Expression();
+			expressions.push_back(en);
+		}
+	}
+	while(this->scannerClass->PeekNextToken().GetTokenType() == INSERTION_TOKEN);
 	Match(SEMICOLON_TOKEN);
 	CoutStatementNode* con = new CoutStatementNode(expressions);
 	return con;

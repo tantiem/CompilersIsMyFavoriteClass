@@ -191,7 +191,7 @@ void InstructionsClass::Call(void * function_address)
 
 void HelperPrintInteger(void)
 {
-	printf("%i ", InstructionsClass::gPrintInteger);
+	printf("%i", InstructionsClass::gPrintInteger);
 }
 
 void InstructionsClass::PopAndWrite()
