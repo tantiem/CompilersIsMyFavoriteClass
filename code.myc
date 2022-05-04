@@ -4,6 +4,9 @@ void main()
 	double slash comments dont work, but this does. idk why
 	*/
 
+	//suckaaaaa	
+
+
 	int i;
 	i = 0;
 	while ( i < 10 )

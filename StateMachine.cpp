@@ -42,6 +42,7 @@ StateMachineClass::StateMachineClass() : curState(START_ST)
 	this->legalMoves[LT_ST][LT_CH] = INS_ST;
 	this->legalMoves[START_ST][END_CH] = END_ST;
 	this->legalMoves[START_ST][WS_CH] = START_ST;
+	this->legalMoves[START_ST][NEWLINE_CH] = START_ST;
 	//block comment and comment stuffs
 	this->legalMoves[DIV_ST][SLASH_CH] = L_COM_ST;
 	this->legalMoves[DIV_ST][ASTER_CH] = B_COM_ST;
@@ -60,7 +61,7 @@ StateMachineClass::StateMachineClass() : curState(START_ST)
 		this->legalMoves[B_COM_ST][i] = B_COM_ST;
 		this->legalMoves[B_COM_ST_2][i] = B_COM_ST;
 	}
-	this->legalMoves[L_COM_ST]['\n'] = START_ST;
+	this->legalMoves[L_COM_ST][NEWLINE_CH] = START_ST;
 	this->legalMoves[B_COM_ST][ASTER_CH] = B_COM_ST_2;
 	this->legalMoves[B_COM_ST_2][SLASH_CH] = START_ST;
 
@@ -118,6 +119,8 @@ MachineState StateMachineClass::UpdateState(char currentChar, TokenType& corresp
 	switch(currentChar)
 	{
 		case '\n':
+			charType = NEWLINE_CH;
+			break;
 		case ' ':
 		case '\t':
 			charType = WS_CH;

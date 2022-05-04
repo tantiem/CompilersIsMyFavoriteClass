@@ -37,7 +37,7 @@ TokenClass ScannerClass::GetNextToken()
 		lexeme += c;
 		currentState = stateMachine.UpdateState(c, correspondingTokenType);
 		MSG(currentState);
-		if(currentState == START_ST || currentState == END_ST)
+		if(currentState == START_ST || currentState == END_ST || currentState == L_COM_ST)
 		{
 			lexeme = "";
 		}
